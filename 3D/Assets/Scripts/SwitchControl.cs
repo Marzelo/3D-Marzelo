@@ -19,7 +19,7 @@ public class SwitchControl : MonoBehaviour {
     public SwitchControl alternateSwitch;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         objectRenderer = GetComponent<Renderer>();
         SetEnable(startEnabled);
 	}
@@ -30,9 +30,9 @@ public class SwitchControl : MonoBehaviour {
 	}
 
     public void SetEnable (bool enabledState) {
-        if (alternateSwitch != null) { alternateSwitch.SetEnable(enabledState); }
         objectRenderer.material.color = enabledState ? enabledColor : disabledColor; 
         _enabled = enabledState;
+        if (alternateSwitch != null && alternateSwitch.isEnabled != enabledState) { alternateSwitch.SetEnable(enabledState); }
     }
 
     public void SayDebug (bool canSay) {
@@ -48,8 +48,10 @@ public class SwitchControl : MonoBehaviour {
 	}
     IEnumerator MovePlatformToTargetPoint() {
         Vector3 nextTarget = platform.position;
+        Rigidbody platformRigidbody = platform.GetComponent<Rigidbody> ();
         while (platform.position != targetPoint) {
-            platform.position = Vector3.MoveTowards (platform.position, targetPoint, transitionSpeed * Time.deltaTime);
+            platformRigidbody.MovePosition(Vector3.MoveTowards (platformRigidbody.position, targetPoint, transitionSpeed * Time.fixedDeltaTime));
+            //platformRigidbody.position = Vector3.MoveTowards (platform.position, targetPoint, transitionSpeed * Time.fixedDeltaTime);
 		    yield return null;
 	    }
         targetPoint = nextTarget;
