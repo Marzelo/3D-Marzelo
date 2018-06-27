@@ -16,9 +16,14 @@ public class PlataformerMovement : MonoBehaviour {
     public Transform movingPlatform;
     Vector3 lastPlatformPos;
 
+    public Animator animatorController;
+
+    public bool grounded;
+    public List<Collider> groundedCollection;
+
 	// Use this for initialization
 	void Start () {
-		
+        groundedCollection = new List<Collider>();
 	}
 	
 	// Update is called once per frame
@@ -71,5 +76,40 @@ public class PlataformerMovement : MonoBehaviour {
 		if (other.CompareTag ("Switch")) {
 			currentSwitch = null;
 		}
+	}
+
+    /*void OnCollisionEnter(Collision collision){
+        foreach(ContactPoint contact in collision.contacts){
+            Debug.DrawRay(contact.point, contact.normal * 5, Color.red, 1f);
+            if(Vector3.Dot (contact.normal, Vector3.up) > 0.75f) {
+                Debug.Log("SHOULD BE GROUNDED!!");
+                grounded = true;
+                groundedCollection.Add(collision.collider);
+            }
+        }
+	}*/
+
+    void OnCollisionStay(Collision collision){
+        if (!groundedCollection.Contains(collision.collider)){
+            foreach (ContactPoint contact in collision.contacts){
+                Debug.DrawRay(contact.point, contact.normal * 5, Color.red, 1f);
+                if (Vector3.Dot(contact.normal, Vector3.up) > 0.75f){
+                    Debug.Log("SHOULD BE GROUNDED!!");
+                    grounded = true;
+                    animatorController.SetBool("isGrounded", grounded);
+                    groundedCollection.Add(collision.collider);
+                    break;
+                }
+            }
+        }
+    }
+
+	void OnCollisionExit(Collision collision){
+        if(groundedCollection.Contains(collision.collider)){
+            groundedCollection.Remove(collision.collider);
+        }
+        if(groundedCollection.Count <= 0){
+            grounded = false;
+        }
 	}
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Swicht
   - Switch
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
