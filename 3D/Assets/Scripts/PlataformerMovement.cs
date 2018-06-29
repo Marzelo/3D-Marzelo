@@ -17,9 +17,10 @@ public class PlataformerMovement : MonoBehaviour {
     Vector3 lastPlatformPos;
 
     public Animator animatorController;
+    public PlayerScript playerScript;
 
-    public bool grounded;
-    public List<Collider> groundedCollection;
+    bool grounded;
+    List<Collider> groundedCollection;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +33,9 @@ public class PlataformerMovement : MonoBehaviour {
         rotation = rigidbody3D.rotation;
 		float horizontalDirection = Input.GetAxis("Horizontal");
 		float verticalDirection = Input.GetAxis("Vertical");
+
+        animatorController.SetFloat("forwardSpeed", NormalizeMovement (verticalDirection));
+
 		if (Input.GetKey(KeyCode.J)) {
             rotation *= Quaternion.Euler(Vector3.up * -angularSpeed * Time.fixedDeltaTime);
         }
@@ -48,15 +52,13 @@ public class PlataformerMovement : MonoBehaviour {
         rigidbody3D.MoveRotation(rotation);
 	}
     void Update(){
-        if (Input.GetKeyDown(KeyCode.Space)){
-            rigidbody3D.AddForce(Vector3.up * impulseValue, ForceMode.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space) && grounded){
+            rigidbody3D.AddForce(Vector3.up * 5f, ForceMode.Impulse);
         }
-        if (currentSwitch != null && Input.GetKeyDown(KeyCode.E)){
-            currentSwitch.Activate();
-        }
-        if (movingPlatform != null){
-            transform.Translate(movingPlatform.position - lastPlatformPos);
-        }
+    }
+
+    public float NormalizeMovement (float targetMovement) {
+        return (targetMovement + 1f) / 2f;
     }
 
 	private void LateUpdate(){
@@ -101,6 +103,7 @@ public class PlataformerMovement : MonoBehaviour {
                     break;
                 }
             }
+            playerScript.ModifyHP(-20);
         }
     }
 
@@ -110,6 +113,7 @@ public class PlataformerMovement : MonoBehaviour {
         }
         if(groundedCollection.Count <= 0){
             grounded = false;
+            animatorController.SetBool("isGrounded", grounded);
         }
 	}
 }
