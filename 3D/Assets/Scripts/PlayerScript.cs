@@ -21,7 +21,7 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (currentHP == 0){
+        if (currentHP <= 0){
             int currentIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(currentIndex);
         }
