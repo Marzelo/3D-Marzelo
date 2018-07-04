@@ -7,6 +7,8 @@ public class PlayerScript : MonoBehaviour {
 
     public float maxHP = 1f;
     public float currentHP;
+    public PowerBallBehaviour currentPower;
+  
 
     public float normalizeHP { get { return currentHP / maxHP; } }
 
@@ -19,6 +21,7 @@ public class PlayerScript : MonoBehaviour {
 		
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
         if (currentHP <= 0){
@@ -26,4 +29,6 @@ public class PlayerScript : MonoBehaviour {
             SceneManager.LoadScene(currentIndex);
         }
 	}
+
+
 }

@@ -36,10 +36,10 @@ public class PlataformerMovement : MonoBehaviour {
 
         animatorController.SetFloat("forwardSpeed", NormalizeMovement (verticalDirection));
 
-		if (Input.GetKey(KeyCode.J)) {
+        if (Input.GetKey(KeyCode.I)) {
             rotation *= Quaternion.Euler(Vector3.up * -angularSpeed * Time.fixedDeltaTime);
         }
-        if(Input.GetKey(KeyCode.K)) {
+        if(Input.GetKey(KeyCode.O)) {
             rotation *= Quaternion.Euler(Vector3.up * angularSpeed * Time.fixedDeltaTime);
         }
 		if (horizontalDirection !=0) {
@@ -55,6 +55,13 @@ public class PlataformerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && grounded){
             rigidbody3D.AddForce(Vector3.up * 5f, ForceMode.Impulse);
         }
+        else if (Input.GetKeyDown(KeyCode.J) && playerScript.currentPower.isWaiting){
+            Attack();
+        }
+    }
+
+    void Attack () {
+        playerScript.currentPower.AttackRoundAbout();
     }
 
     public float NormalizeMovement (float targetMovement) {
@@ -72,6 +79,14 @@ public class PlataformerMovement : MonoBehaviour {
 			currentSwitch = other.GetComponent<SwitchControl> ();
         }else if (other.CompareTag ("MovingPlatform")){
             movingPlatform = null; 
+        }
+
+        if(other.CompareTag("Power")) {
+            PowerBallBehaviour targetPower = other.GetComponent<PowerBallBehaviour>();
+            if (playerScript.currentPower != null || playerScript.currentPower != other.GetComponent<PowerBallBehaviour>()){
+                playerScript.currentPower = targetPower;
+                targetPower.AssignActivePlayer(this);
+            }
         }
 	}
 	void OnTriggerExit (Collider other) {
@@ -103,7 +118,7 @@ public class PlataformerMovement : MonoBehaviour {
                     break;
                 }
             }
-            playerScript.ModifyHP(-20);
+            //playerScript.ModifyHP(-20);
         }
     }
 

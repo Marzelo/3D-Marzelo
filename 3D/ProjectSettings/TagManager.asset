@@ -7,6 +7,8 @@ TagManager:
   - Swicht
   - Switch
   - MovingPlatform
+  - Power
+  - Lava
   layers:
   - Default
   - TransparentFX
