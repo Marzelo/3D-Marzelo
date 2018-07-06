@@ -54,8 +54,9 @@ public class PlataformerMovement : MonoBehaviour {
     void Update(){
         if (Input.GetKeyDown(KeyCode.Space) && grounded){
             rigidbody3D.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            playerScript.ModifyHP(-20);
         }
-        else if (Input.GetKeyDown(KeyCode.J) && playerScript.currentPower.isWaiting){
+        else if (Input.GetKeyDown(KeyCode.J) && !playerScript.currentPower.isWaiting){
             Attack();
         }
     }
@@ -83,7 +84,7 @@ public class PlataformerMovement : MonoBehaviour {
 
         if(other.CompareTag("Power")) {
             PowerBallBehaviour targetPower = other.GetComponent<PowerBallBehaviour>();
-            if (playerScript.currentPower != null || playerScript.currentPower != other.GetComponent<PowerBallBehaviour>()){
+            if (playerScript.currentPower != null || playerScript.currentPower != targetPower){
                 playerScript.currentPower = targetPower;
                 targetPower.AssignActivePlayer(this);
             }

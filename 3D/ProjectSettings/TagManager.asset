@@ -9,6 +9,7 @@ TagManager:
   - MovingPlatform
   - Power
   - Lava
+  - Damageable
   layers:
   - Default
   - TransparentFX
