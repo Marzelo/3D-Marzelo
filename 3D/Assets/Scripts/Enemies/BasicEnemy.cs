@@ -26,9 +26,9 @@ public class BasicEnemy : EnemyObject
         if (target != null){
             transform.forward = (planarTargetDistance - transform.position).normalized;
         }
-        /*for (int i = 0; i < enemyRenderer.material. ,  ){
-            enemyRenderer.material.color = damageGradient.Evaluate(colorIndex);
-        }*/
+        for (int i = 0; i < enemyRenderer.materials.Length; i++){
+            enemyRenderer.materials[i].color = damageGradient.Evaluate(colorIndex);
+        }
 	}
 
 	public override void TakeDamage(){

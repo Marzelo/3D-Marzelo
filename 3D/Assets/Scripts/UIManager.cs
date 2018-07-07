@@ -12,10 +12,12 @@ public class UIManager : MonoBehaviour{
     public PlayerScript playerScript;
     public Gradient barColors;
     public Image restartPanel;
-    public float restartSpeed = 1;
+    public float restartSpeed ;
+
+    bool isLoading = false;
 
 	void Awake(){
-        if ( instance == null){
+        if (instance == null){
             instance = this;
             DontDestroyOnLoad (gameObject);
         }else {
@@ -40,7 +42,8 @@ public class UIManager : MonoBehaviour{
             hpBar.fillAmount = Mathf.MoveTowards(hpBar.fillAmount, playerScript.normalizeHP, 2f * delta * Time.deltaTime);
             hpBar.color = barColors.Evaluate(hpBar.fillAmount);
         }
-        if (Input.GetKeyDown(KeyCode.T)){
+        if (!isLoading && Input.GetKeyDown(KeyCode.T)){
+            isLoading = true;
             StartCoroutine(RestartProcess());
         }
     }
@@ -56,7 +59,7 @@ public class UIManager : MonoBehaviour{
         Debug.Log("Here1: " + playerScript);
         AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Here2");
-        while (operation.isDone) {
+        while (!operation.isDone) {
             yield return null;
         }
         Debug.Log("Here3: " + playerScript);
@@ -66,6 +69,7 @@ public class UIManager : MonoBehaviour{
             restartPanel.color = FadeColorAlpha(restartPanel.color, 0, restartSpeed * Time.deltaTime);
             yield return null;
         }
+        isLoading = false;
         yield return null;
         Debug.Log("Here5: " + playerScript.maxHP);
     }
