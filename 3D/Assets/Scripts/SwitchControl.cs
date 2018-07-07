@@ -30,7 +30,7 @@ public class SwitchControl : MonoBehaviour {
 	}
 
     public void SetEnable (bool enabledState) {
-        objectRenderer.material.color = enabledState ? enabledColor : disabledColor; 
+//        objectRenderer.material.color = enabledState ? enabledColor : disabledColor; 
         _enabled = enabledState;
         if (alternateSwitch != null && alternateSwitch.isEnabled != enabledState) { alternateSwitch.SetEnable(enabledState); }
     }
