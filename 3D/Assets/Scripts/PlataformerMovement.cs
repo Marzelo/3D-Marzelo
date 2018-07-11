@@ -87,6 +87,7 @@ public class PlataformerMovement : MonoBehaviour {
             if (playerScript.currentPower != null || playerScript.currentPower != targetPower){
                 playerScript.currentPower = targetPower;
                 targetPower.AssignActivePlayer(this);
+                QuestManager.instance.Check("obtain", targetPower.powerName);
             }
         }
 	}

@@ -29,6 +29,4 @@ public class PlayerScript : MonoBehaviour {
             SceneManager.LoadScene(currentIndex);
         }*/
 	}
-
-
 }

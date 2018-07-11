@@ -1450,7 +1450,7 @@ GameObject:
   - component: {fileID: 359377874}
   m_Layer: 0
   m_Name: cube (12)
-  m_TagString: Lava
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1535,7 +1535,7 @@ GameObject:
   - component: {fileID: 371246017}
   m_Layer: 0
   m_Name: cube (13)
-  m_TagString: Lava
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1934,7 +1934,7 @@ GameObject:
   - component: {fileID: 605589152}
   m_Layer: 0
   m_Name: cube (14)
-  m_TagString: Lava
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3063,7 +3063,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.75
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 1
@@ -3185,6 +3185,11 @@ Prefab:
       propertyPath: damageArea
       value: 
       objectReference: {fileID: 1014758934}
+    - target: {fileID: 114630142572010662, guid: 4a09f4692372b4a53880d6685d30c7e2,
+        type: 2}
+      propertyPath: powerName
+      value: FireBall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a09f4692372b4a53880d6685d30c7e2, type: 2}
   m_IsPrefabParent: 0
@@ -3200,6 +3205,7 @@ GameObject:
   - component: {fileID: 1468355498}
   - component: {fileID: 1468355497}
   - component: {fileID: 1468355501}
+  - component: {fileID: 1468355502}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3330,6 +3336,20 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   restartPanel: {fileID: 1689477296}
   restartSpeed: 3.5
+--- !u!114 &1468355502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468355496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4126e8b4eb6c1458389d6888115fe1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inactive: []
+  active: []
+  completed: []
 --- !u!1 &1488897006
 GameObject:
   m_ObjectHideFlags: 0
@@ -4230,7 +4250,7 @@ GameObject:
   - component: {fileID: 1788851606}
   m_Layer: 0
   m_Name: cube (15)
-  m_TagString: Lava
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4443,7 +4463,7 @@ GameObject:
   - component: {fileID: 2014063979}
   m_Layer: 0
   m_Name: cube (11)
-  m_TagString: Lava
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

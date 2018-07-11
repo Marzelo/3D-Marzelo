@@ -10,6 +10,7 @@ TagManager:
   - Power
   - Lava
   - Damageable
+  - Pared
   layers:
   - Default
   - TransparentFX
