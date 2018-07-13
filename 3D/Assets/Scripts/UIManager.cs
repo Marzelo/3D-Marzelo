@@ -54,17 +54,22 @@ public class UIManager : MonoBehaviour{
             restartPanel.color = FadeColorAlpha(restartPanel.color, 1, restartSpeed * Time.deltaTime);
             yield return null;
         }
-        Debug.Log("Here0");
         playerScript = null;
-        Debug.Log("Here1: " + playerScript);
         AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        Debug.Log("Here2");
         while (!operation.isDone) {
             yield return null;
         }
-        Debug.Log("Here3: " + playerScript);
+        while (QuestManager.instance.completed.Count != 0) {
+            QuestManager.instance.inactive.Add(QuestManager.instance.completed[0].ResetQuest());
+            QuestManager.instance.completed.RemoveAt(0);
+        }
+        while (QuestManager.instance.active.Count != 0){
+            QuestManager.instance.inactive.Add(QuestManager.instance.active[0].ResetQuest());
+            QuestManager.instance.active.RemoveAt(0);
+        }
+        QuestManager.instance.Activate("QT01");
+
         playerScript = FindPlayerInstance ();
-        Debug.Log("Here4: " + playerScript.maxHP);
         while (restartPanel.color.a != 0){
             restartPanel.color = FadeColorAlpha(restartPanel.color, 0, restartSpeed * Time.deltaTime);
             yield return null;

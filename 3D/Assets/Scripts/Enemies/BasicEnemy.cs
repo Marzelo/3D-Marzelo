@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy : EnemyObject
-{
+public class BasicEnemy : EnemyObject{
 
     public int health;
     bool invulnerable = false;
@@ -20,9 +19,6 @@ public class BasicEnemy : EnemyObject
     }
 
 	void Update(){
-        if (health <= 0){
-            Destroy(gameObject);
-        }
         if (target != null){
             transform.forward = (planarTargetDistance - transform.position).normalized;
         }
@@ -42,5 +38,9 @@ public class BasicEnemy : EnemyObject
 
     public void ResetInvulnerable () {
         invulnerable = false;
+        if (health <= 0){
+            QuestManager.instance.Check("destroy", name);
+            Destroy(gameObject);
+        }
     }
 }

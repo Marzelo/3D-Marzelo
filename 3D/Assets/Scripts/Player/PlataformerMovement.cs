@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlataformerMovement : MonoBehaviour {
 
 
-	public float horizontalSpeed;
+	public float movementSpeed;
     public float angularSpeed;
 	Vector3 movement;
     Quaternion rotation;
@@ -31,22 +31,22 @@ public class PlataformerMovement : MonoBehaviour {
 	void FixedUpdate () {
 		movement = transform.position;
         rotation = rigidbody3D.rotation;
-		float horizontalDirection = Input.GetAxis("Horizontal");
-		float verticalDirection = Input.GetAxis("Vertical");
+		float horizontalMovement = Input.GetAxis("Horizontal");
+		float verticalMovement = Input.GetAxis("Vertical");
 
-        animatorController.SetFloat("forwardSpeed", NormalizeMovement (verticalDirection));
+        animatorController.SetFloat("forwardSpeed", NormalizeMovement (verticalMovement));
 
-        if (Input.GetKey(KeyCode.I)) {
+        if (Input.GetKey(KeyCode.Q)) {
             rotation *= Quaternion.Euler(Vector3.up * -angularSpeed * Time.fixedDeltaTime);
         }
-        if(Input.GetKey(KeyCode.O)) {
+        if(Input.GetKey(KeyCode.E)) {
             rotation *= Quaternion.Euler(Vector3.up * angularSpeed * Time.fixedDeltaTime);
         }
-		if (horizontalDirection !=0) {
-            movement += Vector3.right * horizontalDirection * horizontalSpeed * Time.fixedDeltaTime;
+		if (horizontalMovement !=0) {
+            movement += transform.right * movementSpeed * horizontalMovement * Time.fixedDeltaTime;
 		}
-		if (verticalDirection !=0) {
-            movement += Vector3.forward * verticalDirection * horizontalSpeed * Time.fixedDeltaTime;
+		if (verticalMovement !=0) {
+            movement += transform.forward * movementSpeed * verticalMovement * Time.fixedDeltaTime;
 		}
 		rigidbody3D.MovePosition(movement);
         rigidbody3D.MoveRotation(rotation);
@@ -59,6 +59,7 @@ public class PlataformerMovement : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.J) && !playerScript.currentPower.isWaiting){
             Attack();
         }
+
     }
 
     void Attack () {
