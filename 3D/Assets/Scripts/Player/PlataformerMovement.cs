@@ -86,7 +86,10 @@ public class PlataformerMovement : MonoBehaviour {
         if(other.CompareTag("Power")) {
             PowerBallBehaviour targetPower = other.GetComponent<PowerBallBehaviour>();
             if (playerScript.currentPower != null || playerScript.currentPower != targetPower){
-                playerScript.currentPower = targetPower;
+                if (playerScript.currentPower != null && playerScript.currentPower != targetPower) {
+                    Destroy(playerScript.currentPower.gameObject);
+                }
+                playerScript.currentPower = targetPower ;
                 targetPower.AssignActivePlayer(this);
                 QuestManager.instance.Check("obtain", targetPower.powerName);
             }
