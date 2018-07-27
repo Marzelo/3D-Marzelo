@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour{
 
     bool isLoading = false;
 
+    public CamMovement camBehaviour;
+    CamMovement.CamData defaultData;
+
 	void Awake(){
         if (instance == null){
             instance = this;
@@ -28,8 +31,7 @@ public class UIManager : MonoBehaviour{
 	// Use this for initialization
 	void Start(){
         if (playerScript == null){
-            playerScript = FindPlayerInstance();
-            Debug.Log("Marzelo");
+            InitGameScripts();
         }
 
     }
@@ -46,6 +48,13 @@ public class UIManager : MonoBehaviour{
             isLoading = true;
             StartCoroutine(RestartProcess());
         }
+        if (!isLoading && Input.GetKeyDown(KeyCode.M)){
+            if(camBehaviour.GetCamData().CompareValue(defaultData)) {
+                camBehaviour.SetCamData(new CamMovement.CamData(17f, Vector3.up * 25f, GameObject.Find("Platform_Base").transform));
+            }else {
+                camBehaviour.SetCamData(defaultData);
+            }
+        }
     }
 
     IEnumerator RestartProcess(){
@@ -59,7 +68,7 @@ public class UIManager : MonoBehaviour{
         while (!operation.isDone) {
             yield return null;
         }
-        while (QuestManager.instance.completed.Count != 0) {
+        /*while (QuestManager.instance.completed.Count != 0) {
             QuestManager.instance.inactive.Add(QuestManager.instance.completed[0].ResetQuest());
             QuestManager.instance.completed.RemoveAt(0);
         }
@@ -67,9 +76,9 @@ public class UIManager : MonoBehaviour{
             QuestManager.instance.inactive.Add(QuestManager.instance.active[0].ResetQuest());
             QuestManager.instance.active.RemoveAt(0);
         }
-        QuestManager.instance.Activate("QT01");
+        QuestManager.instance.Activate("QT01");*/
 
-        playerScript = FindPlayerInstance ();
+        InitGameScripts();
         while (restartPanel.color.a != 0){
             restartPanel.color = FadeColorAlpha(restartPanel.color, 0, restartSpeed * Time.deltaTime);
             yield return null;
@@ -85,5 +94,11 @@ public class UIManager : MonoBehaviour{
 
     PlayerScript FindPlayerInstance () {
         return GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+    }
+
+    void InitGameScripts () {
+        playerScript = FindPlayerInstance();
+        camBehaviour = Camera.main.GetComponent<CamMovement>();
+        defaultData = camBehaviour.GetCamData();
     }
 }

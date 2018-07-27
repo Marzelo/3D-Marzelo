@@ -67,7 +67,7 @@ public class EnemyEntity : DamageableObject {
             invulnerable = true;
 
             if (effectName != null){
-                Debug.Log("Will try to apply" + effectName);
+                Debug.Log("Will try to apply " + effectName);
                 effect = EffectManager.instance.Search(effectName).Apply (this);
             }
         }
@@ -75,7 +75,7 @@ public class EnemyEntity : DamageableObject {
     public void ResetInvulnerable(){
         invulnerable = false;
         if (health <= 0){
-            QuestManager.instance.Check("destroy", name);
+            QuestManager.instance.Check("destroy ", name);
             Destroy(gameObject);
         }
     }

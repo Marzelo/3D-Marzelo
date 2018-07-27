@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class CamMovement : MonoBehaviour {
 
-	public Transform lookTarget;
-	public float targetHeight;
-	public Vector3 targetPoint;
-	Vector3 localPoint;
+    public class CamData {
+        public float moveSpeed; 
+        public Vector3 targetDistance;
+        public Transform target;
+       
+        public CamData (float moveSpeed, Vector3 targetDistance, Transform target){
+            this.moveSpeed = moveSpeed;
+            this.targetDistance = targetDistance;
+            this.target = target;
+        }
+
+        public bool CompareValue (CamData otherData) {
+            return moveSpeed == otherData.moveSpeed &&
+                   targetDistance == otherData.targetDistance &&
+                   target == otherData.target;
+        }
+    }
+
+    public float moveSpeed;
+    public Vector3 targetDistance;
+    public Transform target;
+    Vector3 targetNode;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,9 +34,9 @@ public class CamMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-		localPoint = lookTarget.position + (lookTarget.right * targetPoint.x) + (lookTarget.up * targetPoint.y) + (lookTarget.forward * targetPoint.z);		
-		transform.position = Vector3.MoveTowards (transform.position, localPoint, 5f * Time.deltaTime);
-		transform.LookAt(lookTarget);
+		targetNode = target.position + (target.right * targetDistance.x) + (target.up * targetDistance.y) + (target.forward * targetDistance.z);		
+        transform.position = Vector3.MoveTowards (transform.position, targetNode, moveSpeed * Time.deltaTime);
+		transform.LookAt(target);
 
 		/*transform.LookAt (lookTarget);
 		float difference = Mathf.Abs(transform.position.y - lookTarget.position.y);
@@ -36,7 +55,17 @@ public class CamMovement : MonoBehaviour {
 
 		void OnDrawGizmos () {
 			Gizmos.color = Color.green;
-			Gizmos.DrawSphere(localPoint, 0.5f);
+			Gizmos.DrawSphere(targetNode, 0.5f);
 		}
+
+    public void SetCamData (CamData camData) {
+        moveSpeed = camData.moveSpeed;
+        targetDistance = camData.targetDistance;
+        target = camData.target;
+    }
+
+    public CamData GetCamData () {
+        return new CamData(moveSpeed, targetDistance, target);
+    }
 
 }
